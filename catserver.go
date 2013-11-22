@@ -1,6 +1,6 @@
 // Listens on a TCP port, parses first line for addressees,
 // puts CatMsg onto channel.
-package catserver
+package main
 
 import "net"
 import "bufio"
@@ -59,6 +59,7 @@ func ClientHandler(connection net.Conn, catmsgs chan CatMsg) {
                 line = line2
                 to = newto
             }
+            line = applyFormatting(line)
             cm := CatMsg{to, line}
             catmsgs <- cm
         }

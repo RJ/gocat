@@ -5,10 +5,9 @@ import "time"
 import "fmt"
 import "log"
 import "flag"
-import "gocat/catserver"
 import irc "github.com/fluffle/goirc/client"
 
-func CatMsgSender(ch chan catserver.CatMsg, client *irc.Conn) {
+func CatMsgSender(ch chan CatMsg, client *irc.Conn) {
     defaultChan := "#rjtest"
     for {
         cm := <-ch
@@ -94,14 +93,14 @@ func main() {
     // to block main:
     control := make(chan string)
     // msgs from tcp catport to this chan:
-    catmsgs := make(chan catserver.CatMsg)
+    catmsgs := make(chan CatMsg)
     // channel signaling irc connection status
     chConnected := make(chan bool)
     // setup IRC client:
     c := irc.SimpleClient(*ircnick)
     c.SSL = *ircssl
     // Listen on catport:
-    go catserver.CatportServer(catmsgs, *catfam, *catbind)
+    go CatportServer(catmsgs, *catfam, *catbind)
     go CatMsgSender(catmsgs, c)
     // loop on IRC dis/connected events
     setupClient(c, chConnected)

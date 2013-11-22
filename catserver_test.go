@@ -1,4 +1,4 @@
-package catserver
+package main
 
 import "testing"
 
