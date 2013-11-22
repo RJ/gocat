@@ -66,6 +66,7 @@ func setupClient(c *irc.Conn, chConnected chan bool) {
 }
 
 func main() {
+    fromXML("./conf.xml")
     var irchost = flag.String(
         "irchost",
         "localhost",
